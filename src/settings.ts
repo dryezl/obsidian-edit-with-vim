@@ -1,18 +1,18 @@
 import {App, PluginSettingTab, Setting} from "obsidian";
-import MyPlugin from "./main";
+import EditWithVimPlugin from "./main";
 
-export interface MyPluginSettings {
-	mySetting: string;
+export interface EditWithVimSettings {
+	vimPath: string;
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
+export const DEFAULT_SETTINGS: EditWithVimSettings = {
+	vimPath: 'vim'
 }
 
-export class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+export class EditWithVimSettingTab extends PluginSettingTab {
+	plugin: EditWithVimPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: EditWithVimPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -23,13 +23,13 @@ export class SampleSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Settings #1')
-			.setDesc('It\'s a secret')
+			.setName('Vim path')
+			.setDesc('Path to the vim executable (e.g. /usr/bin/vim or just vim).')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
+				.setPlaceholder('Vim')
+				.setValue(this.plugin.settings.vimPath)
 				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
+					this.plugin.settings.vimPath = value;
 					await this.plugin.saveSettings();
 				}));
 	}
