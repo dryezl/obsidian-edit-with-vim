@@ -55,7 +55,10 @@ export default class EditWithVimPlugin extends Plugin {
 
 		let child: ReturnType<typeof spawn>;
 		if (os === 'darwin') {
-			const script = `tell application "Terminal" to do script "${appleScriptEscape(vimPath)} \\"${appleScriptEscape(filePath)}\\""`;
+			const script = `tell application "Terminal"
+activate
+do script "${appleScriptEscape(vimPath)} \\"${appleScriptEscape(filePath)}\\""
+end tell`;
 			child = spawn('osascript', ['-e', script], {detached: true, stdio: 'ignore'});
 		} else if (os === 'linux') {
 			child = spawn('x-terminal-emulator', ['-e', vimPath, filePath], {detached: true, stdio: 'ignore'});
